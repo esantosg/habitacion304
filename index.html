@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>habitación 304</title>
+<meta name="description" content="10 habitaciones. 3,04 €. La noche del 26 de diciembre. Haz tu check-in.">
+<meta property="og:title" content="habitación 304">
+<meta property="og:description" content="10 habitaciones. 3,04 €. La noche del 26 de diciembre.">
+<meta property="og:image" content="https://habitacion304.com/assets/portada.jpg">
+<meta property="og:url" content="https://habitacion304.com/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔑</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stone:#D8D4CB; --stone-2:#E2DFD6; --stone-3:#CDC9BF;
+  --ink:#3A3936; --grey:#7A766B; --brass:#8F7E52; --brass-deep:#6E6040;
+  --line:#C4C0B5; --ok:#6B7A52;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ background:var(--stone); }
+body{
+  background:var(--stone); color:var(--ink);
+  font-family:'Barlow', 'Helvetica Neue', Arial, sans-serif;
+  font-weight:400; line-height:1.55; min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{ max-width:640px; margin:0 auto; padding:40px 22px 60px; }
+.progress{ position:fixed; top:0; left:0; height:2px; background:var(--brass); width:25%; transition:width .5s ease; z-index:10; }
+.scene{ display:none; }
+.scene.on{ display:block; animation:appear .6s ease both; }
+@keyframes appear{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:none;} }
+@media (prefers-reduced-motion: reduce){ .scene.on{ animation:none; } .progress{ transition:none; } }
+.art{ width:100%; display:block; border:1px solid var(--line); }
+.art-frame{ margin:8px 0 30px; }
+h1,h2{ font-weight:200; text-transform:lowercase; letter-spacing:.04em; line-height:1.15; }
+h1{ font-size:clamp(34px, 7vw, 52px); }
+h2{ font-size:clamp(26px, 5.5vw, 36px); margin-bottom:14px; }
+.big-num{ font-weight:200; font-size:clamp(40px, 9vw, 64px); letter-spacing:.03em; line-height:1.1; margin:6px 0 2px; }
+.big-num .brass{ color:var(--brass-deep); }
+.dateline{ color:var(--grey); font-size:17px; letter-spacing:.06em; text-transform:lowercase; margin-bottom:22px; }
+p{ margin-bottom:14px; font-size:16.5px; }
+.small{ font-size:13.5px; color:var(--grey); }
+.quiet{ color:var(--grey); }
+a{ color:var(--brass-deep); }
+button, .btn{
+  appearance:none; display:inline-block; cursor:pointer; text-decoration:none; text-align:center;
+  font-family:inherit; font-size:15.5px; font-weight:500; letter-spacing:.08em; text-transform:lowercase;
+  color:var(--brass-deep); background:transparent; border:1px solid var(--brass);
+  padding:13px 30px; transition:background .2s ease, color .2s ease;
+}
+button:hover, .btn:hover{ background:var(--brass); color:var(--stone); }
+button:focus-visible, .btn:focus-visible, input:focus-visible{ outline:2px solid var(--brass-deep); outline-offset:2px; }
+button.primary{ background:var(--brass); color:#F1EFE8; }
+button.primary:hover{ background:var(--brass-deep); }
+button.done{ border-color:var(--ok); color:var(--ok); pointer-events:none; }
+button[disabled]{ opacity:.55; pointer-events:none; }
+.btn-row{ display:flex; gap:12px; flex-wrap:wrap; margin:18px 0 8px; }
+form{ margin-top:22px; }
+label.field{ display:block; margin-bottom:16px; font-size:14px; color:var(--grey); text-transform:lowercase; letter-spacing:.04em; }
+input[type=text], input[type=email]{
+  display:block; width:100%; margin-top:6px; padding:12px 14px; font:inherit; font-size:16.5px;
+  color:var(--ink); background:var(--stone-2); border:1px solid var(--line);
+}
+.chk{ display:flex; gap:10px; align-items:flex-start; margin:14px 0; font-size:14px; color:var(--ink); }
+.chk input{ margin-top:3px; width:16px; height:16px; accent-color:var(--brass-deep); flex:none; }
+.err{ color:#8A4A3A; font-size:13.5px; margin-top:10px; display:none; }
+.rule{ height:1px; background:var(--line); margin:26px 0; }
+.copyblock{ background:var(--stone-2); border-left:2px solid var(--brass); padding:16px 18px; margin:20px 0; font-style:italic; color:#55534C; font-size:15.5px; }
+.reveal-pack{ background:var(--stone-2); border:1px solid var(--line); padding:20px 22px; margin:20px 0; }
+.reveal-pack ul{ list-style:none; }
+.reveal-pack li{ padding:7px 0; border-bottom:1px solid var(--line); font-size:15.5px; }
+.reveal-pack li:last-child{ border-bottom:none; }
+.reveal-pack li::before{ content:"— "; color:var(--brass-deep); }
+.player{ display:flex; align-items:center; gap:14px; background:var(--stone-2); border:1px solid var(--line); padding:14px 16px; margin:18px 0 6px; }
+.player .play{ width:44px; height:44px; border-radius:50%; border:1px solid var(--brass); flex:none; padding:0;
+  display:flex; align-items:center; justify-content:center; }
+.player .bar{ flex:1; height:2px; background:var(--stone-3); position:relative; }
+.player .bar i{ position:absolute; left:0; top:0; bottom:0; width:0%; background:var(--brass-deep); }
+.player .time{ font-size:13px; color:var(--grey); flex:none; font-variant-numeric:tabular-nums; }
+.count{ font-weight:200; font-size:clamp(30px, 6vw, 44px); letter-spacing:.05em; margin:6px 0 2px; font-variant-numeric:tabular-nums; }
+.status{ border:1px solid var(--brass); padding:18px 20px; margin-top:24px; }
+.status b{ font-weight:600; text-transform:lowercase; letter-spacing:.05em; }
+.status.full{ border-color:var(--ok); }
+footer{ max-width:640px; margin:0 auto; padding:26px 22px 40px; border-top:1px solid var(--line); }
+footer p{ font-size:12.5px; color:var(--grey); margin-bottom:4px; }
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+
+<div class="wrap">
+
+  <!-- ESCENA 1 -->
+  <section class="scene on" id="s1" aria-labelledby="s1h">
+    <div class="art-frame"><img class="art" src="assets/portada-recorte.jpg" alt="Una mano de escayola sostiene una llave dorada"></div>
+    <h1 id="s1h">has leído bien.</h1>
+    <div class="big-num">10 habitaciones. <span class="brass">3,04 €</span>.</div>
+    <div class="dateline">la noche del 26 de diciembre · madrid</div>
+    <p>Solo podrán conseguirlas quienes estén en la lista. La lista se abre el <strong>1 de octubre a las 18:00</strong>. Para entrar, haz tu check-in.</p>
+    <div class="btn-row"><button class="primary" onclick="go(2)">hacer check-in</button></div>
+    <p class="small">Una habitación por persona · mayores de 18 años · <a href="bases.html">bases de la acción</a></p>
+  </section>
+
+  <!-- ESCENA 2 -->
+  <section class="scene" id="s2" aria-labelledby="s2h">
+    <h2 id="s2h">check-in</h2>
+    <p class="quiet">Como en cualquier hotel: tu nombre y dónde encontrarte.</p>
+    <form novalidate onsubmit="return checkin(event)">
+      <label class="field">nombre
+        <input type="text" id="f-name" autocomplete="name" required>
+      </label>
+      <label class="field">email
+        <input type="email" id="f-mail" autocomplete="email" required>
+      </label>
+      <div class="chk"><input type="checkbox" id="f-ct">
+        <span>Me suscribo a la newsletter de <strong>Comandante Twin</strong> y acepto las <a href="bases.html">bases de la acción</a> y la <a href="privacidad.html">política de privacidad</a>. La suscripción es la condición para entrar en la lista.</span></div>
+      <div class="err" id="err">Revisa tu nombre, tu email y la casilla: sin eso no hay llave.</div>
+      <div class="btn-row"><button type="submit" class="primary" id="submitbtn">confirmar check-in</button></div>
+      <p class="small">Responsable: El Vuelo del Tenedor, S.L. Finalidades: gestionar tu participación en La Noche 304 y, con tu consentimiento, enviarte la newsletter de Comandante Twin. Derechos: acceso, rectificación, supresión y otros, escribiendo a comandantetwin@gmail.com. Más información en la <a href="privacidad.html">política de privacidad</a>. Podrás darte de baja en cualquier momento desde cualquier correo.</p>
+    </form>
+  </section>
+
+  <!-- ESCENA 3 -->
+  <section class="scene" id="s3" aria-labelledby="s3h">
+    <h2 id="s3h">tu llave, <span id="who">viajero</span>.</h2>
+    <div class="art-frame"><img class="art" src="assets/portada.jpg" alt="Portada de habitación 304: una mano de escayola sostiene una llave dorada"></div>
+    <div class="copyblock">Toda habitación guarda una historia. Esta guarda una canción.</div>
+    <p><strong>habitación 304</strong> — el nuevo single de <strong>Comandante Twin</strong>. <span id="release-line">Sale el 24 de septiembre a las 18:00.</span></p>
+
+    <div class="player" aria-label="reproductor">
+      <button class="play" id="playbtn" onclick="togglePlay()" aria-label="reproducir fragmento">
+        <svg id="ic-play" width="14" height="16" viewBox="0 0 14 16" aria-hidden="true"><path d="M1 1 L13 8 L1 15 Z" fill="#6E6040"/></svg>
+        <svg id="ic-pause" width="12" height="16" viewBox="0 0 12 16" style="display:none" aria-hidden="true"><rect x="1" y="1" width="3.5" height="14" fill="#6E6040"/><rect x="7.5" y="1" width="3.5" height="14" fill="#6E6040"/></svg>
+      </button>
+      <div class="bar"><i id="bar"></i></div>
+      <div class="time" id="ptime">0:00 / 0:17</div>
+      <audio id="aud" preload="auto" src="assets/fragmento.mp3"></audio>
+    </div>
+    <p class="small" id="player-note">fragmento del single (0:17).</p>
+
+    <div id="hook">
+      <div class="rule"></div>
+      <p>¿Por qué el 26 de diciembre? <span class="quiet">Eso aún no podemos contártelo. Los que están dentro lo sabrán antes que nadie.</span></p>
+    </div>
+
+    <div id="pack" style="display:none">
+      <div class="rule"></div>
+      <p>Ya podemos contártelo. La noche del 26 de diciembre, cada una de las 10 habitaciones incluye:</p>
+      <div class="reveal-pack"><ul>
+        <li>la habitación doble en UMusic Hotel Madrid, por 3,04 € (se abonan a tu llegada, en recepción)</li>
+        <li>2 entradas para Comandante Twin en La Riviera</li>
+        <li>acceso exclusivo a la post party en el propio hotel (Museo Chicote)</li>
+      </ul></div>
+      <p class="quiet">la lista se abre en</p>
+      <div class="count" id="count">—</div>
+    </div>
+
+    <div class="btn-row"><button class="primary" onclick="go(4)">completar mi check-in</button></div>
+  </section>
+
+  <!-- ESCENA 4 -->
+  <section class="scene" id="s4" aria-labelledby="s4h">
+    <h2 id="s4h">un paso más y la llave es tuya antes.</h2>
+    <p>Guarda <em>habitación 304</em> en tu plataforma y el <strong>1 de octubre recibirás el enlace a las 17:45</strong> — quince minutos antes que el resto. Con 10 habitaciones, esos minutos lo son todo.</p>
+    <div class="btn-row">
+      <button id="ps-sp" onclick="presave()">hacer pre-save del single</button>
+    </div>
+    <p class="small">se abre el enlace oficial — elige tu plataforma y vuelve aquí.</p>
+    <div class="rule"></div>
+    <p class="quiet">Y si quieres seguir la historia donde se cuenta:</p>
+    <div class="btn-row"><a class="btn" href="https://instagram.com/comandantetwin" target="_blank" rel="noopener">seguir a @comandantetwin</a></div>
+    <div class="status" id="status">
+      <b>check-in confirmado.</b><br>
+      <span class="small" id="status-line">Recibirás el enlace el 1 de octubre a las 18:00.</span>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 El Vuelo del Tenedor, S.L. — Comandante Twin</p>
+  <p><a href="bases.html">bases de la acción</a> · <a href="privacidad.html">privacidad, aviso legal y cookies</a></p>
+  <p>Esta web no utiliza cookies.</p>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN — pegar aquí las URL de los formularios de MailerLite
+   (el valor del atributo action="..." del código de embed de cada formulario)
+   ============================================================ */
+var ML = {
+  registro: "https://assets.mailerlite.com/jsonp/2637650/forms/198706128112059486/subscribe",
+  completo: "https://assets.mailerlite.com/jsonp/2637650/forms/198706450700174816/subscribe"
+};
+var PRESAVE_URL = "https://comandantetwin.lnk.to/habitacion304";
+/* ============================================================ */
+
+var estado = 1, scene = 1, playing = false, presaves = {}, regName = "", regMail = "";
+
+function mlPost(url, fields){
+  if(!url) return Promise.resolve({success:true, _preview:true});
+  var body = new URLSearchParams();
+  for(var k in fields) body.append('fields['+k+']', fields[k]);
+  body.append('ml-submit','1'); body.append('anticsrf','true');
+  return fetch(url, { method:'POST', body: body }).then(function(r){ return r.json(); });
+}
+
+function go(n){
+  document.getElementById('s'+scene).classList.remove('on');
+  scene = n;
+  document.getElementById('s'+scene).classList.add('on');
+  document.getElementById('prog').style.width = (scene*25) + '%';
+  window.scrollTo({top:0, behavior:'auto'});
+  stopPlay();
+}
+
+function checkin(e){
+  e.preventDefault();
+  var name = document.getElementById('f-name').value.trim();
+  var mail = document.getElementById('f-mail').value.trim();
+  var ok = name.length > 1 && /.+@.+\..+/.test(mail) && document.getElementById('f-ct').checked;
+  var err = document.getElementById('err');
+  err.style.display = ok ? 'none' : 'block';
+  err.textContent = 'Revisa tu nombre, tu email y la casilla: sin eso no hay llave.';
+  if(!ok) return false;
+  var btn = document.getElementById('submitbtn');
+  btn.disabled = true; btn.textContent = 'un momento…';
+  mlPost(ML.registro, { name: name, email: mail }).then(function(res){
+    btn.disabled = false; btn.textContent = 'confirmar check-in';
+    if(res && (res.success || res._preview)){
+      regName = name; regMail = mail;
+      document.getElementById('who').textContent = name.split(' ')[0].toLowerCase();
+      go(3);
+    } else {
+      err.textContent = 'No hemos podido registrar tu check-in. Inténtalo de nuevo en unos segundos.';
+      err.style.display = 'block';
+    }
+  }).catch(function(){
+    btn.disabled = false; btn.textContent = 'confirmar check-in';
+    err.textContent = 'No hemos podido registrar tu check-in. Comprueba tu conexión e inténtalo de nuevo.';
+    err.style.display = 'block';
+  });
+  return false;
+}
+
+function setEstado(n){
+  estado = n;
+  var rl = document.getElementById('release-line'),
+      pn = document.getElementById('player-note');
+  if(n===1){
+    rl.textContent = 'Sale el 24 de septiembre a las 18:00.';
+    pn.innerHTML = 'fragmento del single (0:17).';
+  } else {
+    rl.textContent = 'Ya está fuera.';
+    pn.innerHTML = 'fragmento (0:17) · <a href="' + PRESAVE_URL + '" target="_blank" rel="noopener">escúchala entera en tu plataforma</a>';
+  }
+  document.getElementById('hook').style.display = (n===3) ? 'none' : 'block';
+  document.getElementById('pack').style.display = (n===3) ? 'block' : 'none';
+  stopPlay(); if(A()) A().currentTime = 0; paintBar();
+}
+
+var aud = null;
+function A(){
+  if(!aud){
+    aud = document.getElementById('aud');
+    if(aud){
+      aud.addEventListener('timeupdate', paintBar);
+      aud.addEventListener('ended', function(){ aud.currentTime = 0; stopPlay(); paintBar(); });
+    }
+  }
+  return aud;
+}
+function fmt(s){ s = Math.floor(s||0); return Math.floor(s/60) + ':' + ('0'+(s%60)).slice(-2); }
+function paintBar(){
+  var a = A(), d = (a && a.duration && isFinite(a.duration)) ? a.duration : 17;
+  var t = a ? a.currentTime : 0;
+  document.getElementById('bar').style.width = (100*t/d) + '%';
+  document.getElementById('ptime').textContent = fmt(t) + ' / ' + fmt(d);
+}
+function togglePlay(){
+  var a = A();
+  if(playing){ stopPlay(); return; }
+  if(!a) return;
+  a.play().then(function(){
+    playing = true;
+    document.getElementById('ic-play').style.display='none';
+    document.getElementById('ic-pause').style.display='block';
+  }).catch(function(){});
+}
+function stopPlay(){
+  playing = false; var a = A(); if(a) a.pause();
+  var p = document.getElementById('ic-play'), q = document.getElementById('ic-pause');
+  if(p){ p.style.display='block'; q.style.display='none'; }
+}
+
+function presave(){
+  presaves.done = true;
+  window.open(PRESAVE_URL, '_blank', 'noopener');
+  if(regMail) mlPost(ML.completo, { name: regName, email: regMail }).catch(function(){});
+  var b = document.getElementById('ps-sp');
+  b.classList.add('done');
+  b.textContent = 'pre-save hecho ✓';
+  var st = document.getElementById('status');
+  st.classList.add('full');
+  st.innerHTML = '<b>check-in completo ✓</b><br><span class="small">Recibirás el enlace el 1 de octubre a las <strong>17:45</strong> — antes que nadie.</span>';
+}
+
+/* cuenta atrás a la apertura: 1 oct 2026, 18:00 Madrid */
+function tickCount(){
+  var el = document.getElementById('count'); if(!el) return;
+  var target = new Date('2026-10-01T18:00:00+02:00').getTime();
+  var d = Math.max(0, target - Date.now());
+  var days = Math.floor(d/86400000), h = Math.floor(d%86400000/3600000),
+      m = Math.floor(d%3600000/60000), s = Math.floor(d%60000/1000);
+  el.textContent = days + ' d · ' + ('0'+h).slice(-2) + ':' + ('0'+m).slice(-2) + ':' + ('0'+s).slice(-2);
+}
+setInterval(tickCount, 1000); tickCount(); paintBar();
+
+/* estado automático por fecha (override para pruebas: ?vista=1|2|3) */
+(function(){
+  var v = new URLSearchParams(location.search).get('vista');
+  if(v==='1'||v==='2'||v==='3'){ setEstado(parseInt(v,10)); return; }
+  var now = Date.now();
+  if(now >= new Date('2026-09-28T11:00:00+02:00').getTime()) setEstado(3);
+  else if(now >= new Date('2026-09-24T18:00:00+02:00').getTime()) setEstado(2);
+  else setEstado(1);
+})();
+</script>
+</body>
+</html>

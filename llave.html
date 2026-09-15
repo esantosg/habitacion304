@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tu llave — habitación 304</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔑</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{ --stone:#D8D4CB; --stone-2:#E2DFD6; --ink:#3A3936; --grey:#7A766B; --brass:#8F7E52; --brass-deep:#6E6040; --line:#C4C0B5; --ok:#6B7A52; }
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ background:var(--stone); }
+body{ background:var(--stone); color:var(--ink); font-family:'Barlow','Helvetica Neue',Arial,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
+.wrap{ max-width:680px; margin:0 auto; padding:44px 22px 60px; }
+h1{ font-weight:200; text-transform:lowercase; letter-spacing:.04em; font-size:clamp(30px,6vw,44px); margin-bottom:6px; }
+h2{ font-weight:600; font-size:17px; letter-spacing:.03em; color:var(--brass-deep); margin:28px 0 8px; }
+p, li{ font-size:15.5px; margin-bottom:12px; }
+ul{ margin:0 0 12px 0; list-style:none; }
+li{ padding-left:18px; position:relative; }
+li::before{ content:"—"; position:absolute; left:0; color:var(--brass-deep); }
+a{ color:var(--brass-deep); }
+.lead{ color:var(--grey); font-size:15px; margin-bottom:22px; }
+.rule{ height:1px; background:var(--line); margin:26px 0; }
+label.field{ display:block; margin-bottom:16px; font-size:14px; color:var(--grey); text-transform:lowercase; letter-spacing:.04em; }
+input[type=text], input[type=email]{ display:block; width:100%; margin-top:6px; padding:12px 14px; font:inherit; font-size:16.5px; color:var(--ink); background:var(--stone-2); border:1px solid var(--line); }
+.chk{ display:flex; gap:10px; align-items:flex-start; margin:14px 0; font-size:14px; }
+.chk input{ margin-top:3px; width:16px; height:16px; accent-color:var(--brass-deep); flex:none; }
+button{ appearance:none; cursor:pointer; font-family:inherit; font-size:15.5px; font-weight:500; letter-spacing:.08em; text-transform:lowercase; color:#F1EFE8; background:var(--brass); border:1px solid var(--brass); padding:13px 30px; }
+button:hover{ background:var(--brass-deep); }
+button[disabled]{ opacity:.55; pointer-events:none; }
+.err{ color:#8A4A3A; font-size:13.5px; margin-top:10px; display:none; }
+.small{ font-size:13px; color:var(--grey); }
+.count{ font-weight:200; font-size:clamp(30px,6vw,44px); letter-spacing:.05em; font-variant-numeric:tabular-nums; margin:8px 0; }
+.okbox{ border:1px solid var(--ok); padding:18px 20px; margin-top:22px; }
+footer{ max-width:680px; margin:0 auto; padding:26px 22px 40px; border-top:1px solid var(--line); }
+footer p{ font-size:12.5px; color:var(--grey); margin-bottom:4px; }
+</style></head><body><div class="wrap">
+
+<h1>tu llave.</h1>
+
+<div id="lock">
+  <p class="lead">La puerta se abre el 1 de octubre a las 17:45 (check-in completo) y a las 18:00 (resto de registrados).</p>
+  <div class="count" id="count">—</div>
+  <p class="small">Esta página solo funciona con el enlace recibido por email. Vuelve a la hora indicada.</p>
+</div>
+
+<div id="formbox" style="display:none">
+  <p class="lead">Las 10 primeras confirmaciones recibidas ganan la habitación. Rellena y envía — cada segundo cuenta.</p>
+  <form novalidate onsubmit="return confirmar(event)">
+    <label class="field">nombre y apellidos (titular)
+      <input type="text" id="c-name" autocomplete="name" required>
+    </label>
+    <label class="field">email (el mismo con el que hiciste el check-in)
+      <input type="email" id="c-mail" autocomplete="email" required>
+    </label>
+    <label class="field">nombre y apellidos de tu acompañante
+      <input type="text" id="c-comp" required>
+    </label>
+    <div class="chk"><input type="checkbox" id="c-ok">
+      <span>Acepto las <a href="bases.html" target="_blank">bases de la acción</a>. Confirmo que mi acompañante y yo cumplimos los requisitos.</span></div>
+    <div class="err" id="err">Faltan datos: nombre, email, acompañante y la casilla.</div>
+    <button type="submit" id="cbtn">conseguir mi habitación</button>
+  </form>
+</div>
+
+<div id="donebox" style="display:none" class="okbox">
+  <p><strong>Confirmación enviada a las <span id="stamp"></span>.</strong></p>
+  <p>Las 10 primeras confirmaciones recibidas ganan la habitación, por estricto orden de llegada. Te escribimos esta misma tarde, salgas o no en la lista. Suerte — y gracias por estar dentro.</p>
+</div>
+
+<script>
+/* PEGAR AQUÍ — URL del formulario de MailerLite del grupo "confirmaciones 304" */
+var ML_CONFIRMACION = "https://assets.mailerlite.com/jsonp/2637650/forms/198706519408117214/subscribe";
+var OPEN_AT = new Date('2026-10-01T17:45:00+02:00').getTime();
+
+function tick(){
+  var d = Math.max(0, OPEN_AT - Date.now());
+  var el = document.getElementById('count');
+  if(d <= 0){
+    document.getElementById('lock').style.display='none';
+    document.getElementById('formbox').style.display='block';
+    return;
+  }
+  var days=Math.floor(d/86400000), h=Math.floor(d%86400000/3600000), m=Math.floor(d%3600000/60000), s=Math.floor(d%60000/1000);
+  el.textContent = days + ' d · ' + ('0'+h).slice(-2) + ':' + ('0'+m).slice(-2) + ':' + ('0'+s).slice(-2);
+  setTimeout(tick, 500);
+}
+if(new URLSearchParams(location.search).get('test')==='1'){
+  document.getElementById('lock').style.display='none';
+  document.getElementById('formbox').style.display='block';
+} else { tick(); }
+
+function confirmar(e){
+  e.preventDefault();
+  var name = document.getElementById('c-name').value.trim();
+  var mail = document.getElementById('c-mail').value.trim();
+  var comp = document.getElementById('c-comp').value.trim();
+  var ok = name.length>2 && /.+@.+\..+/.test(mail) && comp.length>2 && document.getElementById('c-ok').checked;
+  var err = document.getElementById('err');
+  err.style.display = ok ? 'none' : 'block';
+  if(!ok) return false;
+  var btn = document.getElementById('cbtn');
+  btn.disabled = true; btn.textContent = 'enviando…';
+  var body = new URLSearchParams();
+  body.append('fields[name]', name);
+  body.append('fields[email]', mail);
+  body.append('fields[acompanante]', comp);
+  body.append('ml-submit','1'); body.append('anticsrf','true');
+  var send = ML_CONFIRMACION
+    ? fetch(ML_CONFIRMACION, { method:'POST', body: body }).then(function(r){ return r.json(); })
+    : Promise.resolve({success:true});
+  send.then(function(res){
+    if(res && res.success){
+      var n = new Date();
+      document.getElementById('stamp').textContent =
+        ('0'+n.getHours()).slice(-2)+':'+('0'+n.getMinutes()).slice(-2)+':'+('0'+n.getSeconds()).slice(-2);
+      document.getElementById('formbox').style.display='none';
+      document.getElementById('donebox').style.display='block';
+    } else { throw new Error(); }
+  }).catch(function(){
+    btn.disabled = false; btn.textContent = 'conseguir mi habitación';
+    err.textContent = 'No hemos podido enviar tu confirmación. Inténtalo de nuevo ahora mismo.';
+    err.style.display = 'block';
+  });
+  return false;
+}
+</script>
+</div>
+<footer>
+<p>© 2026 El Vuelo del Tenedor, S.L. — Comandante Twin</p>
+<p><a href="index.html">habitación 304</a> · <a href="bases.html">bases de la acción</a> · <a href="privacidad.html">privacidad, aviso legal y cookies</a></p>
+<p>Esta web no utiliza cookies.</p>
+</footer></body></html>
